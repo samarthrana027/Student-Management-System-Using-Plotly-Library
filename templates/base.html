@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Student Management System{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script></head><body>
+<header><div class="brand">Student Management System</div><nav><a href="/">Students</a><a href="/data-analysis">Data Analysis</a><a href="/analytics">Plotly Analytics</a><a href="/machine-learning">Machine Learning</a></nav></header>
+<main class="container">
+{% with messages=get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="alert {{category}}">{{message}}</div>{% endfor %}{% endwith %}
+{% block content %}{% endblock %}</main>
+<footer>Student Management &amp; Performance Analysis · Flask + MySQL + Plotly + Scikit-learn</footer>
+</body></html>

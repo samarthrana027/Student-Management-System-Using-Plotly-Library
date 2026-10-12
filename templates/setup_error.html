@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}Database Setup{% endblock %}{% block content %}
+<section class="panel"><h1>Cannot connect to MySQL</h1><p>Check that MySQL is running, the database exists, and your credentials in the .env file are correct.</p><pre>{{error}}</pre><p>Run the SQL script in <code>database/schema.sql</code> using MySQL Workbench or the MySQL command line.</p></section>{% endblock %}

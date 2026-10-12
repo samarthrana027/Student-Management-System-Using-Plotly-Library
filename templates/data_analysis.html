@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block title %}Data Analysis{% endblock %}{% block content %}
+<section class="panel"><h1>Descriptive Statistics</h1><p>Student records available: {{count}}</p>
+{% if summary %}<div class="table-wrap">{{summary|safe}}</div>{% else %}<p>No data available yet.</p>{% endif %}</section>{% endblock %}

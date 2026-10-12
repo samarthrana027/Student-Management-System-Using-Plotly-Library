@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Machine Learning{% endblock %}{% block content %}
+<section class="panel"><h1>Student Pass/Support Classification</h1>
+<p>This page trains a Decision Tree classifier using existing student records. The demonstration label is based on average marks ≥ 40 and attendance ≥ 75%.</p>
+{% if accuracy is not none %}<div class="stats"><div><span>Test accuracy</span><strong>{{accuracy}}%</strong></div></div><h2>Classification report</h2><pre>{{report}}</pre>{% else %}<p>Add enough varied records, then reload this page to train the model.</p>{% endif %}
+<p class="note">This is a classroom demonstration. A rule-derived label can make reported accuracy look better than real-world predictive performance; do not use it for high-stakes student decisions.</p></section>{% endblock %}

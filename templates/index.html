@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block title %}Students{% endblock %}{% block content %}
+<section class="panel"><h1>Student Records</h1><p>Add, search, update and delete student records. Average marks are calculated automatically.</p>
+<form method="get" action="/search" class="search"><input name="q" placeholder="Search roll number or name" value="{{search_query|default('')}}"><button>Search</button><a class="button secondary" href="/">Show all</a></form>
+</section>
+<section class="panel"><h2>Add Student</h2><form method="post" action="/add" class="form-grid">
+<label>Roll No<input name="roll_no" required maxlength="30"></label><label>Name<input name="name" required></label>
+<label>Branch<input name="branch" required placeholder="Computer Engineering"></label><label>Semester<input type="number" name="semester" min="1" max="8" required></label>
+<label>Email<input type="email" name="email"></label><label>Mobile<input name="mobile"></label>
+<label>Math Marks<input type="number" name="math_marks" min="0" max="100" step=".01" required></label>
+<label>Python Marks<input type="number" name="python_marks" min="0" max="100" step=".01" required></label>
+<label>CN Marks<input type="number" name="cn_marks" min="0" max="100" step=".01" required></label>
+<label>WAD Marks<input type="number" name="wad_marks" min="0" max="100" step=".01" required></label>
+<label>Attendance (%)<input type="number" name="attendance" min="0" max="100" step=".01" required></label>
+<div class="form-actions"><button type="submit">Add Student</button></div></form></section>
+<section class="panel"><h2>All Students ({{students|length}} shown)</h2><div class="table-wrap"><table><thead><tr><th>Roll No</th><th>Name</th><th>Branch</th><th>Sem</th><th>Email</th><th>Mobile</th><th>Math</th><th>Python</th><th>CN</th><th>WAD</th><th>Average</th><th>Attendance</th><th>Actions</th></tr></thead><tbody>
+{% for s in students %}<tr><td>{{s.roll_no}}</td><td>{{s.name}}</td><td>{{s.branch}}</td><td>{{s.semester}}</td><td>{{s.email or ''}}</td><td>{{s.mobile or ''}}</td><td>{{s.math_marks}}</td><td>{{s.python_marks}}</td><td>{{s.cn_marks}}</td><td>{{s.wad_marks}}</td><td>{{"%.2f"|format(s.average_marks)}}</td><td>{{"%.1f"|format(s.attendance)}}%</td><td class="actions">
+<details><summary>Edit</summary><form method="post" action="/update/{{s.student_id}}" class="edit-form">
+{% for field,label,value in [('roll_no','Roll No',s.roll_no),('name','Name',s.name),('branch','Branch',s.branch),('semester','Semester',s.semester),('email','Email',s.email or ''),('mobile','Mobile',s.mobile or ''),('math_marks','Math',s.math_marks),('python_marks','Python',s.python_marks),('cn_marks','CN',s.cn_marks),('wad_marks','WAD',s.wad_marks),('attendance','Attendance',s.attendance)] %}
+<label>{{label}}<input name="{{field}}" value="{{value}}" {% if field in ['semester','math_marks','python_marks','cn_marks','wad_marks','attendance'] %}type="number"{% endif %} required></label>{% endfor %}<button>Save changes</button></form></details>
+<form method="post" action="/delete/{{s.student_id}}" onsubmit="return confirm('Delete this student?')"><button class="danger">Delete</button></form></td></tr>
+{% else %}<tr><td colspan="13">No student records found. Add the first student above.</td></tr>{% endfor %}
+</tbody></table></div></section>{% endblock %}
